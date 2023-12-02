@@ -16,10 +16,7 @@ dotenv.config();
 
 const app = express();
 app.use(
-  cors({
-    origin: "https://connect-sm.vercel.app/",
-    credentials: true,
-  })
+  cors()
 );
 // app.use(express.static(path.join(__dirname, "views/build")));
 
