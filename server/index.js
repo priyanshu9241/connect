@@ -15,14 +15,7 @@ import router from "./routes/index.js";
 dotenv.config();
 
 const app = express();
-app.use(
-  cors({
-    origin: "https://connect-sm.vercel.app/",
-    credentials: true,
-  })
-);
-// app.use(express.static(path.join(__dirname, "views/build")));
-
+app.use(cors());
 const PORT = process.env.PORT || 8800;
 
 dbConnection();
