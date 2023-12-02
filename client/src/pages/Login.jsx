@@ -10,7 +10,6 @@ import { CustomButton, Loading, TextInput } from "../components";
 import { BgImage } from "../assets";
 import { UserLogin } from "../redux/userSlice";
 import { apiRequest } from "../../utils";
-import axios from "axios";
 
 const Login = () => {
   const {

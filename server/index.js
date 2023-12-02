@@ -17,7 +17,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin:process.env.CLIENT_URL,
+    origin: process.env.CLIENT_URL,
   })
 );
 app.use(express.static(path.join(__dirname, "views/build")));
@@ -27,13 +27,10 @@ const PORT = process.env.PORT || 8800;
 dbConnection();
 
 app.use(helmet());
-// app.use(cors());
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
-
 app.use(morgan("dev"));
 app.use(router);
 
