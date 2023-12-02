@@ -25,6 +25,7 @@ import {
   getUserInfo,
 } from "./../../utils/index";
 import { UserLogin } from "./../redux/userSlice";
+
 const Home = () => {
   const dispatch = useDispatch();
   const { user, edit } = useSelector((state) => state.user);
@@ -46,8 +47,10 @@ const Home = () => {
   const handlePostSubmit = async (data) => {
     setPosting(true);
     try {
-      const uri = file && (await handleFileUpload(file));
-      const newData = uri ? { ...data, image: uri } : data;
+      const media = file && (await handleFileUpload(file));
+      const newData = media
+        ? { ...data, media: media.secure_url, public_id: media.public_id }
+        : data;
       const res = await apiRequest({
         method: "POST",
         url: "/posts/create-post",

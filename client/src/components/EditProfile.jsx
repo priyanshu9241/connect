@@ -27,8 +27,8 @@ const EditProfile = () => {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      const uri = picture && (await handleFileUpload(picture));
-      console.log(uri);
+      const media = picture && (await handleFileUpload(picture));
+      console.log(media);
       const { firstName, lastName, profession, location } = data;
       const res = await apiRequest({
         url: "/users/update-user",
@@ -36,7 +36,7 @@ const EditProfile = () => {
           firstName,
           lastName,
           location,
-          profileUrl: uri ? uri : user?.profileUrl,
+          profileUrl: media.secure_url ? media.secure_url : user?.profileUrl,
           profession,
         },
         method: "PUT",
@@ -49,7 +49,7 @@ const EditProfile = () => {
         dispatch(UserLogin(newUser));
         setTimeout(() => {
           dispatch(UpdateProfile(false));
-        }, 3000);
+        }, 1000);
       }
     } catch (e) {
       console.log(e);

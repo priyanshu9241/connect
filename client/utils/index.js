@@ -29,11 +29,11 @@ export const handleFileUpload = async (uploadFile) => {
     const { data } = await axios.post(
       `https://api.cloudinary.com/v1_1/${
         import.meta.env.VITE_CLOUDINARY_ID
-      }/image/upload`,
+      }/auto/upload`,
       formData
     );
     console.log(data);
-    return data.secure_url;
+    return { secure_url: data.secure_url, public_id: data.public_id };
   } catch (e) {
     console.log(e);
     return { status: e.success, message: e.message };

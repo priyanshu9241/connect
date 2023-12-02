@@ -8,7 +8,19 @@ import { useForm } from "react-hook-form";
 import TextInput from "./TextInput";
 import Loading from "./Loading";
 import CustomButton from "./CustomButton";
-import { postComments } from "../assets/data";
+import VideoPlayer from "./VideoPlayer";
+import { apiRequest } from "../../utils";
+const getPostComments = async (id) => {
+  try {
+    const res = await apiRequest({
+      url: "/posts/comments/" + id,
+      method: "GET",
+    });
+    return res?.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const ReplyCard = ({ reply, user, handleLike }) => {
   return (
@@ -66,7 +78,34 @@ const CommentForm = ({ user, id, replyAt, getComments }) => {
     mode: "onChange",
   });
 
-  const onSubmit = async (data) => {};
+  const onSubmit = async (data) => {
+    setLoading(true);
+    setErrMsg("");
+    try {
+      const URL = replyAt
+        ? `/posts/comment/${id}`
+        : `/posts/reply-comment/${id}`;
+      const newData = {
+        comment: data?.comment,
+        from: user.firstName + " " + user.lastName,
+        replyAt: replyAt,
+      };
+      const res = await apiRequest({
+        url: URL,
+        method: "POST",
+        token: user.token,
+        data: newData,
+      });
+      if (res.status === "failed") {
+        setErrMsg(res);
+      }
+      reset({ comment: "" });
+      await getComments();
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
+  };
 
   return (
     <form
@@ -128,8 +167,8 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
 
   const getComments = async () => {
     setReplyComments(0);
-
-    setComments(postComments);
+    const result = await getPostComments(id);
+    setComments(result);
     setLoading(false);
   };
   const handleLike = async (uri) => {
@@ -188,13 +227,19 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
             ))}
         </p>
 
-        {post?.image && (
-          <img
-            src={post?.image}
-            alt="post image"
-            className="w-full mt-2 rounded-lg"
-          />
-        )}
+        {post?.media &&
+          (post?.media?.includes("video") ? (
+            <VideoPlayer
+              className="w-full mx-auto"
+              public_id={post?.public_id}
+            />
+          ) : (
+            <img
+              src={post?.media}
+              alt="post image"
+              className="w-full mt-2 rounded-lg"
+            />
+          ))}
       </div>
 
       <div

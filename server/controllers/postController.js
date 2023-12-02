@@ -5,7 +5,7 @@ import Users from "../models/userModel.js";
 export const createPost = async (req, res, next) => {
   try {
     const { userId } = req.body.user;
-    const { description, image } = req.body;
+    const { description, media, public_id } = req.body;
 
     if (!description) {
       next("You must provide a description");
@@ -15,7 +15,8 @@ export const createPost = async (req, res, next) => {
     const post = await Posts.create({
       userId,
       description,
-      image,
+      media,
+      public_id,
     });
 
     res.status(200).json({
@@ -329,6 +330,6 @@ export const deletePost = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ message: error.message ,log:"inside pussy"});
+    res.status(404).json({ message: error.message, log: "inside pussy" });
   }
 };
