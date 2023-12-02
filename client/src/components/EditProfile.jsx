@@ -6,7 +6,7 @@ import TextInput from "./TextInput";
 import Loading from "./Loading";
 import CustomButton from "./CustomButton";
 import { UpdateProfile, UserLogin } from "../redux/userSlice";
-import { apiRequest, handleFileUpload } from "./../../utils/index";
+import { apiRequest, handleFileUpload } from "../../utils/index";
 
 const EditProfile = () => {
   const { user } = useSelector((state) => state.user);

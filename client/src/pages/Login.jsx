@@ -32,7 +32,6 @@ const Login = () => {
         url: "/auth/login",
         data,
       });
-      // console.log(data);
       // const res = await axios.post("http://localhost:8800/auth/login", data);
       // console.log(res);
 

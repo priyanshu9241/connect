@@ -17,7 +17,10 @@ export const apiRequest = async ({ url, token, data, method }) => {
     return result?.data;
   } catch (e) {
     console.log(e);
-    return { status: e.success, message: e.message };
+    return {
+      status: e.response.data.success,
+      message: e.response.data.message,
+    };
   }
 };
 export const handleFileUpload = async (uploadFile) => {
@@ -62,9 +65,9 @@ export const likePosts = async (uri, token) => {
     });
     return result;
   } catch (e) {
-    const error = e.response.data;
-    console.log(error);
-    return { status: error.success, message: error.message };
+    // const error = e.response;
+    console.log(e);
+    return { status: e.response.statusText, message: error.message };
   }
 };
 export const deletePosts = async (id, token) => {

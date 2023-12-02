@@ -21,7 +21,6 @@ const getPostComments = async (id) => {
     console.log(e);
   }
 };
-
 const ReplyCard = ({ reply, user, handleLike }) => {
   return (
     <div className="w-full py-3">
@@ -60,6 +59,12 @@ const ReplyCard = ({ reply, user, handleLike }) => {
             )}
             {reply?.likes?.length} Likes
           </p>
+          {/* <span
+            className="cursor-pointer text-blue"
+            onClick={() => setReplyComments(comment?._id)}
+          >
+            Reply
+          </span> */}
         </div>
       </div>
     </div>
@@ -82,7 +87,7 @@ const CommentForm = ({ user, id, replyAt, getComments }) => {
     setLoading(true);
     setErrMsg("");
     try {
-      const URL = replyAt
+      const URL = !replyAt
         ? `/posts/comment/${id}`
         : `/posts/reply-comment/${id}`;
       const newData = {
@@ -103,8 +108,8 @@ const CommentForm = ({ user, id, replyAt, getComments }) => {
       await getComments();
     } catch (e) {
       console.log(e);
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
@@ -164,8 +169,9 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
   const [loading, setLoading] = useState(false);
   const [replyComments, setReplyComments] = useState(0);
   const [showComments, setShowComments] = useState(0);
+  const [replying, setReplying] = useState(false);
 
-  const getComments = async () => {
+  const getComments = async (id) => {
     setReplyComments(0);
     const result = await getPostComments(id);
     setComments(result);
@@ -271,7 +277,7 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
           {post?.comments?.length} Comments
         </p>
 
-        {user.user?._id === post?.userId?._id && (
+        {user._id === post?.userId?._id && (
           <div
             className="flex items-center gap-1 text-base cursor-pointer text-ascent-1"
             onClick={() => deletePost(post?._id)}
@@ -320,7 +326,12 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
                   <p className="text-ascent-2">{comment?.comment}</p>
 
                   <div className="flex gap-6 mt-2">
-                    <p className="flex items-center gap-2 text-base cursor-pointer text-ascent-2">
+                    <p
+                      className="flex items-center gap-2 text-base cursor-pointer text-ascent-2"
+                      onClick={() =>
+                        handleLike("/posts/like-comment/" + comment?._id)
+                      }
+                    >
                       {comment?.likes?.includes(user?._id) ? (
                         <BiSolidLike size={20} color="blue" />
                       ) : (
