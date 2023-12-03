@@ -50,6 +50,7 @@ export const fetchPosts = async (token, dispatch, uri, data) => {
       method: "POST",
       data: data || {},
     });
+    // console.log(result);
     dispatch(SetPosts(result?.data));
   } catch (e) {
     console.log(e);

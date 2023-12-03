@@ -31,14 +31,13 @@ const Register = () => {
         data,
         method: "POST",
       });
-
-      if (res?.status === "failed") {
+      if (res?.status !== "success") {
         setErrMsg(res);
         setIsSubmitting(false);
       } else {
         setInterval(() => {
           window.location.replace("/login");
-        }, 5000);
+        }, 1000);
       }
     } catch (e) {
       console.log(e);

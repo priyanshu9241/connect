@@ -33,7 +33,9 @@ export const createPost = async (req, res, next) => {
 export const getPosts = async (req, res, next) => {
   try {
     const { userId } = req.body.user;
+    console.log(userId);
     const { search } = req.body;
+    console.log(search);
 
     const user = await Users.findById(userId);
     const friends = user?.friends?.toString().split(",") ?? [];

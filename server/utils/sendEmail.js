@@ -10,7 +10,7 @@ dotenv.config();
 const { AUTH_EMAIL, AUTH_PASSWORD, APP_URL } = process.env;
 
 let transporter = nodemailer.createTransport({
-  host: "smtp-mail.outlook.com",
+  host: "smtp.gmail.com",
   auth: {
     user: AUTH_EMAIL,
     pass: AUTH_PASSWORD,
@@ -28,7 +28,7 @@ export const sendVerificationEmail = async (user, res) => {
   const mailOptions = {
     from: AUTH_EMAIL,
     to: email,
-    subject: "Email Verification",
+    subject: "Connect SocialMedia Acoount Verification",
     html: `<div
     style='font-family: Arial, sans-serif; font-size: 20px; color: #333; background-color: #f7f7f7; padding: 20px; border-radius: 5px;'>
     <h3 style="color: rgb(8, 56, 188)">Please verify your email address</h3>
