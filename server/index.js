@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import bodyParser from "body-parser";
-// import path from "path";
+import path from "path";
 //securty packages
 import helmet from "helmet";
 import dbConnection from "./dbConfig/index.js";
