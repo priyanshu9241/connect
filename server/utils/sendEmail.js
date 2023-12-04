@@ -7,7 +7,7 @@ import PasswordReset from "../models/PasswordReset.js";
 
 dotenv.config();
 
-const { AUTH_EMAIL, AUTH_PASSWORD, APP_URL } = process.env;
+const { AUTH_EMAIL, AUTH_PASSWORD, CLIENT_URL } = process.env;
 
 let transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -22,13 +22,13 @@ export const sendVerificationEmail = async (user, res) => {
 
   const token = _id + uuidv4();
 
-  const link = APP_URL + "users/verify/" + _id + "/" + token;
+  const link = CLIENT_URL + "/users/verify/" + _id + "/" + token;
 
   //   mail options
   const mailOptions = {
     from: AUTH_EMAIL,
     to: email,
-    subject: "Connect SocialMedia Acoount Verification",
+    subject: "Connect SocialMedia Account Verification",
     html: `<div
     style='font-family: Arial, sans-serif; font-size: 20px; color: #333; background-color: #f7f7f7; padding: 20px; border-radius: 5px;'>
     <h3 style="color: rgb(8, 56, 188)">Please verify your email address</h3>
