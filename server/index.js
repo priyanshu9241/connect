@@ -15,8 +15,13 @@ const __dirname = path.resolve(path.dirname(""));
 dotenv.config();
 
 const app = express();
-app.use(cors());
-app.use(express.static(path.join(__dirname, "views/build")));
+app.use(cors(
+  {
+    origin: "https://connect-sm.vercel.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  }
+));
 const PORT = process.env.PORT || 8800;
 
 dbConnection();
@@ -31,6 +36,7 @@ app.use(router);
 
 //error middleware
 app.use(errorMiddleware);
+app.use(express.static(path.join(__dirname, "views/build")));
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
