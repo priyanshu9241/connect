@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+
 //schema
 const userSchema = new mongoose.Schema(
   {
@@ -26,6 +27,7 @@ const userSchema = new mongoose.Schema(
     profileUrl: { type: String },
     profession: { type: String },
     friends: [{ type: Schema.Types.ObjectId, ref: "Users" }],
+    friendRequestSent: [{ type: Schema.Types.ObjectId, ref: "Users" }],
     views: [{ type: String }],
     verified: { type: Boolean, default: false },
   },

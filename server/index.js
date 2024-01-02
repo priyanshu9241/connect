@@ -15,13 +15,13 @@ const __dirname = path.resolve(path.dirname(""));
 dotenv.config();
 
 const app = express();
-app.use(cors(
-  {
-    origin: "https://connect-sm.vercel.app",
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
-  }
-));
+  })
+);
 const PORT = process.env.PORT || 8800;
 
 dbConnection();

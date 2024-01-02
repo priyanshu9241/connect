@@ -119,6 +119,7 @@ const Home = () => {
     try {
       const res = await sendFriendRequest(user?.token, friendId);
       await fetchSuggestedFriends();
+      await getUser();
     } catch (e) {
       console.log(e);
     }
@@ -374,14 +375,22 @@ const Home = () => {
                     </Link>
 
                     <div className="flex gap-1">
-                      <button
-                        className="bg-[#0444a430] text-sm text-white p-1 rounded"
-                        onClick={() => {
-                          handleFriendRequest(friend._id);
-                        }}
-                      >
-                        <BsPersonFillAdd size={20} className="text-[#0f52b6]" />
-                      </button>
+                      {user.friendRequestSent.includes(friend._id) ? (
+                        <span>Sent</span>
+                      ) : (
+                        <button
+                          className="bg-[#0444a430] text-sm text-white p-1 rounded"
+                          onClick={() => {
+                            
+                            handleFriendRequest(friend._id);
+                          }}
+                        >
+                          <BsPersonFillAdd
+                            size={20}
+                            className="text-[#0f52b6]"
+                          />
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}

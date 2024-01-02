@@ -239,16 +239,17 @@ export const updateUser = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ message: error.message});
+    res.status(404).json({ message: error.message });
   }
 };
 
 export const friendRequest = async (req, res, next) => {
   try {
     const { userId } = req.body.user;
-
     const { requestTo } = req.body;
-
+    const user = await Users.findOne({ _id: userId });
+    user.friendRequestSent.push(requestTo);
+    await user.save();
     const requestExist = await FriendRequest.findOne({
       requestFrom: userId,
       requestTo,
