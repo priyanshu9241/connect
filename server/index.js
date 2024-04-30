@@ -18,7 +18,8 @@ const app = express();
 app.use(
   cors(
     {
-    origin:process.env.CLIENT_URL,
+      origin:"https://connect-sm.vercel.app/"
+    // origin:process.env.CLIENT_URL,
     // origin:true,
     // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     // credentials: true,
