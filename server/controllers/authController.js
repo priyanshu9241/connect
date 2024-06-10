@@ -11,6 +11,14 @@ export const register = async (req, res, next) => {
     return;
   }
 
+  let regex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+  if (!regex.test(password)) {
+    next(
+      "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character"
+    );
+    return;
+  }
   try {
     const userExist = await Users.findOne({ email });
 
