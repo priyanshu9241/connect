@@ -25,6 +25,20 @@ const Register = () => {
   const dispatch = useDispatch();
   const onSubmit = async (data) => {
     setIsSubmitting(true);
+    const { password } = data;
+    console.log(password);
+    let regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+    if (!regex.test(password)) {
+      setErrMsg({
+        ...errMsg,
+        message: "Invalid Password",
+        status: "failed",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const res = await apiRequest({
         url: "/auth/register",
@@ -36,7 +50,6 @@ const Register = () => {
         setIsSubmitting(false);
       } else {
         setInterval(() => {
-          
           window.location.replace("/login");
         }, 1000);
       }
