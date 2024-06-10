@@ -19,6 +19,7 @@ export const register = async (req, res, next) => {
     );
     return;
   }
+  
   try {
     const userExist = await Users.findOne({ email });
 

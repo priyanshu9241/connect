@@ -28,17 +28,23 @@ const EditProfile = () => {
     setIsSubmitting(true);
     try {
       const media = picture && (await handleFileUpload(picture));
-      console.log(media);
+      // console.log(media);
       const { firstName, lastName, profession, location } = data;
+
+      let requestData = {
+        firstName,
+        lastName: lastName ? lastName : "",
+        location: location ? location : "",
+        profession: profession ? profession : "",
+      };
+
+      if (media) {
+        requestData.profileUrl = media.secure_url;
+      }
+
       const res = await apiRequest({
         url: "/users/update-user",
-        data: {
-          firstName,
-          lastName,
-          location,
-          profileUrl: media.secure_url ? media.secure_url : user?.profileUrl,
-          profession,
-        },
+        data: requestData,
         method: "PUT",
         token: user?.token,
       });
@@ -112,9 +118,7 @@ const EditProfile = () => {
                 placeholder="Last Name"
                 type="lastName"
                 styles="w-full"
-                register={register("lastName", {
-                  required: "Last Name do no match",
-                })}
+                register={register("lastName")}
                 error={errors.lastName ? errors.lastName?.message : ""}
               />
 
@@ -124,9 +128,7 @@ const EditProfile = () => {
                 placeholder="Profession"
                 type="text"
                 styles="w-full"
-                register={register("profession", {
-                  required: "Profession is required!",
-                })}
+                register={register("profession")}
                 error={errors.profession ? errors.profession?.message : ""}
               />
 
@@ -135,9 +137,7 @@ const EditProfile = () => {
                 placeholder="Location"
                 type="text"
                 styles="w-full"
-                register={register("location", {
-                  required: "Location do no match",
-                })}
+                register={register("location")}
                 error={errors.location ? errors.location?.message : ""}
               />
 

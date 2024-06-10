@@ -36,6 +36,7 @@ const Register = () => {
         setIsSubmitting(false);
       } else {
         setInterval(() => {
+          
           window.location.replace("/login");
         }, 1000);
       }
